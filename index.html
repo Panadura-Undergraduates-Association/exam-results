@@ -4,53 +4,104 @@
     <title>PUA Pilot Exam Results</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        let allResults = [];
-        
-        // Load data when page loads
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('Page loaded, fetching data...');
-            try {
-                const response = await fetch('data.json');
-                if (!response.ok) {
-                    throw new Error('Failed to load data.json');
-                }
-                allResults = await response.json();
-                console.log('Data loaded successfully:', allResults.length, 'records');
-                console.log('First record:', allResults[0]);
-            } catch (error) {
-                console.error('Error loading data:', error);
-                document.getElementById('error-message').innerHTML = 
-                    'Error loading data: ' + error.message;
-                document.getElementById('error-message').style.display = 'block';
-            }
-        });
+        // ALL DATA EMBEDDED HERE - NO EXTERNAL FILE NEEDED
+        const allResults = [
+            {"index_no":"25260017","name":"M.Y.F AMNA","nic":"200958900887","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260021","name":"M.N.F AMNA","nic":"200968501206","school":"Al Fahriya Central College","science":"A","islam":"A","english":"C","tamil":"C","mathematics":"A","history":"A"},
+            {"index_no":"25260070","name":"M.Z.F ZAAHIDHA","nic":"200960901015","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260084","name":"M.R.F RIMZA","nic":"200974001115","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260091","name":"M.D.F HAANIYA","nic":"200959600923","school":"Al Fahriya Central College","science":"W","islam":"C","english":"S","tamil":"C","mathematics":"W","history":"N/A"},
+            {"index_no":"25260098","name":"M.H.F RUQAIYYAH","nic":"200976201131","school":"Al Fahriya Central College","science":"C","islam":"A","english":"N/A","tamil":"N/A","mathematics":"S","history":"N/A"},
+            {"index_no":"25260105","name":"M.R.F RAHEEMA","nic":"200978801311","school":"Al Fahriya Central College","science":"C","islam":"A","english":"B","tamil":"B","mathematics":"S","history":"N/A"},
+            {"index_no":"25260161","name":"M.S.F SIKRA","nic":"200955701234","school":"Al Fahriya Central College","science":"W","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"W","history":"N/A"},
+            {"index_no":"25260259","name":"M.S ZAHRA ZEENATH","nic":"200954501069","school":"Al Fahriya Central College","science":"W","islam":"C","english":"S","tamil":"C","mathematics":"W","history":"C"},
+            {"index_no":"25260266","name":"M.H.M HASRUL BASIM","nic":"200924401178","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260323","name":"M.M.M. AMMAR","nic":"200920301212","school":"Al Fahriya Central College","science":"C","islam":"C","english":"C","tamil":"C","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260393","name":"M.N MAHDHI","nic":"200922502480","school":"Al Fahriya Central College","science":"W","islam":"S","english":"W","tamil":"S","mathematics":"W","history":"S"},
+            {"index_no":"25260484","name":"M.S.F MARYAM","nic":"200967901122","school":"Al Fahriya Central College","science":"N/A","islam":"B","english":"N/A","tamil":"C","mathematics":"C","history":"N/A"},
+            {"index_no":"25260498","name":"M.I.F RIFDHA","nic":"200968301116","school":"Al Fahriya Central College","science":"W","islam":"C","english":"N/A","tamil":"C","mathematics":"W","history":"N/A"},
+            {"index_no":"25260498","name":"M.T.F RISLA","nic":"200869300760","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260245","name":"M.S.M SHAFKHAN","nic":"200923401181","school":"Al Fahriya Central College","science":"C","islam":"A","english":"S","tamil":"C","mathematics":"S","history":"B"},
+            {"index_no":"25260119","name":"M.F.H.F SUMAIYA","nic":"200961103752","school":"Arafath Muslim School","science":"A","islam":"A","english":"B","tamil":"B","mathematics":"C","history":"A"},
+            {"index_no":"25260126","name":"M.F.F FAHMA","nic":"200977903625","school":"Arafath Muslim School","science":"W","islam":"S","english":"C","tamil":"C","mathematics":"W","history":"S"},
+            {"index_no":"25260196","name":"M.R AAYSHA","nic":"200961102047","school":"Arafath Muslim School","science":"S","islam":"C","english":"C","tamil":"C","mathematics":"W","history":"S"},
+            {"index_no":"25260217","name":"A.AFLA","nic":"200956400155","school":"Arafath Muslim School","science":"S","islam":"C","english":"S","tamil":"B","mathematics":"S","history":"S"},
+            {"index_no":"25260546","name":"M.I.F HAFSA","nic":"200955300104","school":"Arafath Muslim School","science":"W","islam":"N/A","english":"S","tamil":"C","mathematics":"W","history":"S"},
+            {"index_no":"25260477","name":"M.F.F HAFSA","nic":"200966103798","school":"Arafath Muslim School","science":"A","islam":"A","english":"C","tamil":"A","mathematics":"B","history":"A"},
+            {"index_no":"25260273","name":"M.H ABDULLAH","nic":"200907000150","school":"Arafath Muslim School","science":"S","islam":"C","english":"C","tamil":"C","mathematics":"C","history":"C"},
+            {"index_no":"25260280","name":"M.R SAHAD","nic":"200925303722","school":"Arafath Muslim School","science":"W","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260028","name":"F.A.F ZANHA","nic":"200986001681","school":"Jeelan Central College","science":"N/A","islam":"B","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260010","name":"ZEENATHUL SHUKRA","nic":"200977402150","school":"Jeelan Central College","science":"A","islam":"A","english":"A","tamil":"A","mathematics":"A","history":"A"},
+            {"index_no":"25260036","name":"M.S.N AASIYA","nic":"200958802108","school":"Jeelan Central College","science":"C","islam":"B","english":"A","tamil":"B","mathematics":"C","history":"B"},
+            {"index_no":"25260042","name":"M.I.F AAMINA","nic":"200477500300","school":"Jeelan Central College","science":"S","islam":"C","english":"A","tamil":"N/A","mathematics":"S","history":"C"},
+            {"index_no":"25260063","name":"M.N.M SAHEED","nic":"200927002060","school":"Jeelan Central College","science":"C","islam":"C","english":"S","tamil":"C","mathematics":"C","history":"S"},
+            {"index_no":"25260077","name":"HIMA MUFLEEN","nic":"200958502438","school":"Jeelan Central College","science":"C","islam":"C","english":"A","tamil":"N/A","mathematics":"S","history":"N/A"},
+            {"index_no":"25260112","name":"M.F.R RUQAIYYAH","nic":"200911402442","school":"Jeelan Central College","science":"N/A","islam":"C","english":"N/A","tamil":"C","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260140","name":"M.S.F ZIKRA","nic":"200964902389","school":"Jeelan Central College","science":"C","islam":"B","english":"C","tamil":"B","mathematics":"B","history":"C"},
+            {"index_no":"25260133","name":"A.S FATHIMA","nic":"200984402028","school":"Jeelan Central College","science":"C","islam":"B","english":"B","tamil":"C","mathematics":"B","history":"S"},
+            {"index_no":"25260147","name":"M.N.M NILFAR","nic":"200903901599","school":"Jeelan Central College","science":"S","islam":"S","english":"S","tamil":"S","mathematics":"W","history":"W"},
+            {"index_no":"25260154","name":"M.S ZAINAB","nic":"200960902259","school":"Jeelan Central College","science":"C","islam":"B","english":"B","tamil":"C","mathematics":"C","history":"C"},
+            {"index_no":"25260182","name":"S.K.M SHAMRI","nic":"200921102018","school":"Jeelan Central College","science":"W","islam":"W","english":"W","tamil":"S","mathematics":"W","history":"W"},
+            {"index_no":"25260287","name":"M.A.F AMRA","nic":"200981602637","school":"Jeelan Central College","science":"B","islam":"N/A","english":"C","tamil":"N/A","mathematics":"S","history":"B"},
+            {"index_no":"25260048","name":"M.R.F RASHADA","nic":"200982102170","school":"Jeelan Central College","science":"A","islam":"A","english":"B","tamil":"N/A","mathematics":"B","history":"B"},
+            {"index_no":"25260365","name":"I.ZAINAB","nic":"200967303238","school":"Mounthira International School","science":"S","islam":"N/A","english":"B","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260330","name":"M.R AHAMED","nic":"200927202363","school":"Jeelan Central College","science":"W","islam":"N/A","english":"W","tamil":"W","mathematics":"W","history":"W"},
+            {"index_no":"25260470","name":"M.N FATHIMA","nic":"200970202360","school":"Jeelan Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260175","name":"M.ISHAQ","nic":"200906101904","school":"Ilma Muslim School","science":"W","islam":"W","english":"W","tamil":"S","mathematics":"W","history":"S"},
+            {"index_no":"25260189","name":"M.R.F RAASHIDA","nic":"200961102047","school":"Ilma Muslim School","science":"A","islam":"A","english":"C","tamil":"A","mathematics":"A","history":"A"},
+            {"index_no":"25260203","name":"M.F.F HAMDHA","nic":"200971601823","school":"Ilma Muslim School","science":"S","islam":"A","english":"S","tamil":"A","mathematics":"W","history":"C"},
+            {"index_no":"25260210","name":"M.M DHEEMA","nic":"200977004118","school":"Ilma Muslim School","science":"C","islam":"A","english":"S","tamil":"A","mathematics":"W","history":"B"},
+            {"index_no":"25260224","name":"M.S.M ZAHRIN","nic":"201000702896","school":"Ilma Muslim School","science":"B","islam":"A","english":"C","tamil":"A","mathematics":"A","history":"A"},
+            {"index_no":"25260231","name":"M.S SALMA","nic":"201050504063","school":"Ilma Muslim School","science":"C","islam":"A","english":"C","tamil":"A","mathematics":"C","history":"B"},
+            {"index_no":"25260238","name":"M.RIFADH","nic":"200925102865","school":"Ilma Muslim School","science":"W","islam":"W","english":"W","tamil":"W","mathematics":"W","history":"W"},
+            {"index_no":"25260252","name":"I.F AAYSHA","nic":"200984903900","school":"Ilma Muslim School","science":"A","islam":"A","english":"C","tamil":"A","mathematics":"A","history":"A"},
+            {"index_no":"25260309","name":"M.A.F FAHMA","nic":"200974602270","school":"Ilma Muslim School","science":"W","islam":"B","english":"S","tamil":"B","mathematics":"W","history":"S"},
+            {"index_no":"25260316","name":"M.M. REEZA","nic":"200922502383","school":"Ilma Muslim School","science":"W","islam":"S","english":"S","tamil":"S","mathematics":"W","history":"S"},
+            {"index_no":"25260344","name":"M.S.F SAHDHA","nic":"200960400968","school":"Ilma Muslim School","science":"W","islam":"S","english":"W","tamil":"S","mathematics":"W","history":"W"},
+            {"index_no":"25260351","name":"M.I.F AKSHA","nic":"200983002366","school":"Ilma Muslim School","science":"W","islam":"C","english":"W","tamil":"S","mathematics":"W","history":"W"},
+            {"index_no":"25260539","name":"M.R.F ARAFA","nic":"200980602411","school":"Ilma Muslim School","science":"C","islam":"A","english":"C","tamil":"B","mathematics":"S","history":"C"},
+            {"index_no":"25260372","name":"M.R.M YOONUS","nic":"200912401744","school":"Ilma Muslim School","science":"W","islam":"S","english":"W","tamil":"N/A","mathematics":"W","history":"W"},
+            {"index_no":"25260379","name":"M.A.F AFRIDHA","nic":"200976503726","school":"Ilma Muslim School","science":"W","islam":"A","english":"C","tamil":"C","mathematics":"W","history":"S"},
+            {"index_no":"25260386","name":"M.A.M AASHIK","nic":"201000802778","school":"Ilma Muslim School","science":"W","islam":"W","english":"W","tamil":"W","mathematics":"W","history":"W"},
+            {"index_no":"25260400","name":"M.R.M FAZOOL","nic":"201000203674","school":"Ilma Muslim School","science":"N/A","islam":"N/A","english":"W","tamil":"W","mathematics":"W","history":"W"},
+            {"index_no":"25260407","name":"A.M.F AMNA","nic":"200954801770","school":"Ilma Muslim School","science":"N/A","islam":"B","english":"S","tamil":"C","mathematics":"W","history":"C"},
+            {"index_no":"25260414","name":"MARYAM NUWAIS","nic":"200969302281","school":"Ilma Muslim School","science":"W","islam":"S","english":"W","tamil":"S","mathematics":"W","history":"N/A"},
+            {"index_no":"25260428","name":"IZZATH","nic":"200911302910","school":"Ilma Muslim School","science":"W","islam":"S","english":"N/A","tamil":"N/A","mathematics":"W","history":"S"},
+            {"index_no":"25260442","name":"M.H.F.SAHLA","nic":"200971001642","school":"Ilma Muslim School","science":"W","islam":"B","english":"S","tamil":"C","mathematics":"W","history":"S"},
+            {"index_no":"25260449","name":"I.AAMINA","nic":"200977302326","school":"Ilma Muslim School","science":"B","islam":"A","english":"A","tamil":"A","mathematics":"C","history":"A"},
+            {"index_no":"25260456","name":"S.HAFSA MARIYAM","nic":"200961802614","school":"Ilma Muslim School","science":"W","islam":"C","english":"W","tamil":"S","mathematics":"N/A","history":"W"},
+            {"index_no":"25260463","name":"IJAAS","nic":"200934702298","school":"Ilma Muslim School","science":"W","islam":"N/A","english":"W","tamil":"W","mathematics":"N/A","history":"W"},
+            {"index_no":"25260553","name":"HAJARA","nic":"200478904960","school":"Nasrul Hudha Arabic College","science":"N/A","islam":"A","english":"C","tamil":"C","mathematics":"S","history":"N/A"},
+            {"index_no":"25260054","name":"M.M.F KADEEJA","nic":"2009377912819","school":"Nasrul Hudha Arabic College","science":"N/A","islam":"A","english":"C","tamil":"C","mathematics":"S","history":"N/A"},
+            {"index_no":"25260168","name":"F.ZAINAB","nic":"200659705586","school":"Nasrul Hudha Arabic College","science":"N/A","islam":"C","english":"S","tamil":"S","mathematics":"W","history":"N/A"},
+            {"index_no":"25260435","name":"SATHEES ANABDARAJA RUTHISHAN","nic":"200921100026","school":"Isipathana College","science":"W","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260421","name":"M.N KADEEJA","nic":"200285910200","school":"Dharul Aaysha Arabic College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260365","name":"SHAFIYA IZZATH HUSSAIN","nic":"200969901879","school":"Mounthira International School","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260294","name":"AHAMED AMHARDEEN","nic":"200814406011","school":"Wisdom International School","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"N/A","history":"N/A"},
+            {"index_no":"25260567","name":"M.N.F SUMAIYA","nic":"200982700880","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"B","history":"N/A"},
+            {"index_no":"25260574","name":"M.Y.F AMNA","nic":"200958900887","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"B","history":"N/A"},
+            {"index_no":"25260588","name":"AYYASH","nic":"200824703756","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"W","history":"S"},
+            {"index_no":"25260595","name":"RASHAD","nic":"200919504228","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"S","history":"N/A"},
+            {"index_no":"25260602","name":"M.IJAAS","nic":"200907200150","school":"Arafath Muslim School","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"W","history":"N/A"},
+            {"index_no":"25260581","name":"RASHEEDA BANU","nic":"200986600874","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"W","history":"N/A"}
+        ];
         
         function searchResult(event) {
-            console.log('Search function called');
             event.preventDefault();
             
-            const nicInput = document.getElementById('nic');
-            const nic = nicInput.value.trim();
-            console.log('Searching for NIC:', nic);
+            const nic = document.getElementById('nic').value.trim();
             
             if (!nic) {
                 alert('Please enter NIC number');
                 return;
             }
             
-            if (allResults.length === 0) {
-                alert('Data not loaded yet. Please wait a moment and try again.');
-                return;
-            }
-            
             // Search for NIC
             const result = allResults.find(student => student.nic === nic);
-            console.log('Found result:', result);
             
             const resultDisplay = document.getElementById('result-display');
             
             if (result) {
-                // Display result
                 resultDisplay.innerHTML = `
                     <div class="result-card">
                         <h2>PUA Pilot Examination Result Sheet</h2>
@@ -61,10 +112,7 @@
                             <p><strong>School:</strong> ${result.school}</p>
                         </div>
                         <table>
-                            <tr>
-                                <th>Subject</th>
-                                <th>Result</th>
-                            </tr>
+                            <tr><th>Subject</th><th>Result</th></tr>
                             <tr><td>Science</td><td>${result.science}</td></tr>
                             <tr><td>Islam</td><td>${result.islam}</td></tr>
                             <tr><td>English</td><td>${result.english}</td></tr>
@@ -73,21 +121,17 @@
                             <tr><td>History</td><td>${result.history}</td></tr>
                         </table>
                         <div class="action-buttons">
-                            <button type="button" onclick="searchAgain()" class="search-again-btn">Search Another</button>
-                            <button type="button" onclick="printResult()" class="print-btn">Print Result</button>
+                            <button onclick="searchAgain()" class="search-again-btn">Search Another</button>
+                            <button onclick="printResult()" class="print-btn">Print Result</button>
                         </div>
                     </div>
                 `;
-                
-                // Scroll to result
-                resultDisplay.scrollIntoView({ behavior: 'smooth' });
             } else {
                 resultDisplay.innerHTML = `
                     <div class="error-result">
                         <h2>No Result Found</h2>
                         <p>No examination result found for NIC: <strong>${nic}</strong></p>
-                        <p>Please check your NIC number and try again.</p>
-                        <button type="button" onclick="searchAgain()" class="search-again-btn">Try Again</button>
+                        <button onclick="searchAgain()" class="search-again-btn">Try Again</button>
                     </div>
                 `;
             }
@@ -96,21 +140,11 @@
         function searchAgain() {
             document.getElementById('nic').value = '';
             document.getElementById('result-display').innerHTML = '';
-            document.getElementById('nic').focus();
         }
         
         function printResult() {
             window.print();
         }
-        
-        // Add enter key support
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('nic').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchResult(e);
-                }
-            });
-        });
     </script>
 </head>
 <body>
@@ -119,10 +153,6 @@
     <img src="img/logo.png" alt="PUA Logo" class="logo">
     <h1>Panadura Undergraduates Association</h1>
     <h2>Pilot Exam Result Portal</h2>
-
-    <div id="error-message" class="error-message" style="display: none;">
-        Error loading data. Please check your internet connection or contact administrator.
-    </div>
 
     <form onsubmit="searchResult(event)">
         <input type="text" id="nic" placeholder="Enter Your NIC Number" required>
