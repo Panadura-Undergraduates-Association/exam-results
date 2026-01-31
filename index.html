@@ -8,23 +8,30 @@
         
         // Load data when page loads
         document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Page loaded, fetching data...');
             try {
                 const response = await fetch('data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load data.json');
+                }
                 allResults = await response.json();
                 console.log('Data loaded successfully:', allResults.length, 'records');
+                console.log('First record:', allResults[0]);
             } catch (error) {
                 console.error('Error loading data:', error);
+                document.getElementById('error-message').innerHTML = 
+                    'Error loading data: ' + error.message;
                 document.getElementById('error-message').style.display = 'block';
             }
         });
         
         function searchResult(event) {
+            console.log('Search function called');
             event.preventDefault();
             
-            // Hide error message if shown
-            document.getElementById('error-message').style.display = 'none';
-            
-            const nic = document.getElementById('nic').value.trim();
+            const nicInput = document.getElementById('nic');
+            const nic = nicInput.value.trim();
+            console.log('Searching for NIC:', nic);
             
             if (!nic) {
                 alert('Please enter NIC number');
@@ -32,12 +39,13 @@
             }
             
             if (allResults.length === 0) {
-                document.getElementById('error-message').style.display = 'block';
+                alert('Data not loaded yet. Please wait a moment and try again.');
                 return;
             }
             
             // Search for NIC
             const result = allResults.find(student => student.nic === nic);
+            console.log('Found result:', result);
             
             const resultDisplay = document.getElementById('result-display');
             
@@ -65,8 +73,8 @@
                             <tr><td>History</td><td>${result.history}</td></tr>
                         </table>
                         <div class="action-buttons">
-                            <button onclick="searchAgain()" class="search-again-btn">Search Another</button>
-                            <button onclick="printResult()" class="print-btn">Print Result</button>
+                            <button type="button" onclick="searchAgain()" class="search-again-btn">Search Another</button>
+                            <button type="button" onclick="printResult()" class="print-btn">Print Result</button>
                         </div>
                     </div>
                 `;
@@ -79,7 +87,7 @@
                         <h2>No Result Found</h2>
                         <p>No examination result found for NIC: <strong>${nic}</strong></p>
                         <p>Please check your NIC number and try again.</p>
-                        <button onclick="searchAgain()" class="search-again-btn">Try Again</button>
+                        <button type="button" onclick="searchAgain()" class="search-again-btn">Try Again</button>
                     </div>
                 `;
             }
@@ -96,10 +104,12 @@
         }
         
         // Add enter key support
-        document.getElementById('nic').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchResult(e);
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('nic').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchResult(e);
+                }
+            });
         });
     </script>
 </head>
