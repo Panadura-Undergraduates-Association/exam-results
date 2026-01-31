@@ -85,7 +85,8 @@
             {"index_no":"25260602","name":"M.IJAAS","nic":"200907200150","school":"Arafath Muslim School","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"W","history":"N/A"},
             {"index_no":"25260581","name":"RASHEEDA BANU","nic":"200986600874","school":"Al Fahriya Central College","science":"N/A","islam":"N/A","english":"N/A","tamil":"N/A","mathematics":"W","history":"N/A"}
         ];  // <-- This closing bracket was missing
-        
+        console.log('allResults length:', allResults.length);
+        console.log('Searching for NIC:', nic);
         function searchResult(event) {
             event.preventDefault();
             
