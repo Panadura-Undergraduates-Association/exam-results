@@ -3,23 +3,129 @@
 <head>
     <title>PUA Pilot Exam Results</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        let allResults = [];
+        
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const response = await fetch('data.json');
+                allResults = await response.json();
+                console.log('Data loaded successfully:', allResults.length, 'records');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+        
+        function searchResult(event) {
+            event.preventDefault();
+            
+            // Hide error message if shown
+            document.getElementById('error-message').style.display = 'none';
+            
+            const nic = document.getElementById('nic').value.trim();
+            
+            if (!nic) {
+                alert('Please enter NIC number');
+                return;
+            }
+            
+            if (allResults.length === 0) {
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+            
+            // Search for NIC
+            const result = allResults.find(student => student.nic === nic);
+            
+            const resultDisplay = document.getElementById('result-display');
+            
+            if (result) {
+                // Display result
+                resultDisplay.innerHTML = `
+                    <div class="result-card">
+                        <h2>PUA Pilot Examination Result Sheet</h2>
+                        <div class="student-details">
+                            <p><strong>Name:</strong> ${result.name}</p>
+                            <p><strong>Index Number:</strong> ${result.index_no}</p>
+                            <p><strong>NIC Number:</strong> ${result.nic}</p>
+                            <p><strong>School:</strong> ${result.school}</p>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Result</th>
+                            </tr>
+                            <tr><td>Science</td><td>${result.science}</td></tr>
+                            <tr><td>Islam</td><td>${result.islam}</td></tr>
+                            <tr><td>English</td><td>${result.english}</td></tr>
+                            <tr><td>Tamil</td><td>${result.tamil}</td></tr>
+                            <tr><td>Mathematics</td><td>${result.mathematics}</td></tr>
+                            <tr><td>History</td><td>${result.history}</td></tr>
+                        </table>
+                        <div class="action-buttons">
+                            <button onclick="searchAgain()" class="search-again-btn">Search Another</button>
+                            <button onclick="printResult()" class="print-btn">Print Result</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Scroll to result
+                resultDisplay.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                resultDisplay.innerHTML = `
+                    <div class="error-result">
+                        <h2>No Result Found</h2>
+                        <p>No examination result found for NIC: <strong>${nic}</strong></p>
+                        <p>Please check your NIC number and try again.</p>
+                        <button onclick="searchAgain()" class="search-again-btn">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function searchAgain() {
+            document.getElementById('nic').value = '';
+            document.getElementById('result-display').innerHTML = '';
+            document.getElementById('nic').focus();
+        }
+        
+        function printResult() {
+            window.print();
+        }
+        
+        // Add enter key support
+        document.getElementById('nic').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchResult(e);
+            }
+        });
+    </script>
 </head>
 <body>
 
 <div class="container">
-
     <img src="img/logo.png" alt="PUA Logo" class="logo">
-
     <h1>Panadura Undergraduates Association</h1>
     <h2>Pilot Exam Result Portal</h2>
 
-    <form action="result.php" method="POST">
-        <input type="text" name="nic" placeholder="Enter Your NIC Number" required>
+    <div id="error-message" class="error-message" style="display: none;">
+        Error loading data. Please check your internet connection or contact administrator.
+    </div>
+
+    <form onsubmit="searchResult(event)">
+        <input type="text" id="nic" placeholder="Enter Your NIC Number" required>
         <button type="submit">View Result</button>
     </form>
-
+    
+    <div id="result-display"></div>
+    
+    <div class="footer">
+        <p>© 2024 Panadura Undergraduates Association. All rights reserved.</p>
+        <p class="note">Note: This is a pilot examination result portal. Results are final and cannot be changed.</p>
+    </div>
 </div>
-
 
 </body>
 </html>
